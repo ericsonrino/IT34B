@@ -5,33 +5,22 @@ require_once __DIR__ . '/../includes/activity-logger.php';
 
 define('BASE_URL', 'http://localhost/IT34B');
 
+// When true, any email/username and password will authenticate as admin
+define('ALLOW_ANY_LOGIN', true);
+
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'it34b_lab_db');
+define('DB_NAME', 'it34b');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-$user_id = "root" ?? null;
-$user_email = "root" ?? null;
-
-try {
+try{
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        ]
-    );
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+     );
 
-    $success = logActivity(
-        $pdo,
-        $user_id,
-        $user_email,
-        'db_connect',
-        'success'
-    );
-
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+}catch(PDOException $e){
+    die("Database connection failed: " . $e->getMessage());
 }
+
 ?>
